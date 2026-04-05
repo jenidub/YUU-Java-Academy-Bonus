@@ -27,6 +27,12 @@ public class PizzaOrderSystem {
         System.out.print("Enter your age: ");
         int age = scanner.nextInt();
 
+        if (age < 1 && age > 120) {
+            System.out.println("Invalid age. Please enter an age between 1 and 120.");
+            scanner.close();
+            return;
+        }
+
         // Calculate order
         double pizzaPrice = getPizzaPrice(pizzaChoice);
         double subtotal = calculateSubtotal(pizzaPrice, numToppings);
@@ -61,9 +67,7 @@ public class PizzaOrderSystem {
     }
 
     public static double calculateSubtotal(double pizzaPrice, int toppings) {
-        
-        double toppingCost = toppings * 1.50;
-        return pizzaPrice + toppingCost * 2; 
+        return (pizzaPrice + toppings) * 1.50;
     }
 
     public static double calculateDiscount(double subtotal, int age) {
@@ -86,7 +90,7 @@ public class PizzaOrderSystem {
         if (taxableAmount > 0) {
             tax = taxableAmount * TAX_RATE;
         }
-        return tax;  // Variable may not be initialized
+        return tax; 
     }
 
     public static void displayOrderSummary(String name, int pizzaChoice, int toppings,
@@ -97,10 +101,11 @@ public class PizzaOrderSystem {
 
         System.out.println("\n=== Order Summary for " + name + " ===");
         System.out.println(pizzaSize + " Pizza: $" + pizzaPrice);
+        System.out.println("Total items: " + 1 + toppings);
 
-        if (toppings >= 0) {  // Should be > 0
+        if (toppings >= 0) {  
             System.out.println("Additional Toppings (" + (toppings + 1) + "): $" +
-                    (toppings * 1.50));  // Adding 1 to count incorrectly
+                    (toppings * 1.50));  
         }
 
         System.out.println("Subtotal: $" + subtotal);
