@@ -16,11 +16,16 @@ public class PizzaOrderSystem {
 
         // Get pizza choice
         System.out.print("Enter your choice (1-3): ");
-        int pizzaChoice = scanner.nextInt();
+        String entry = scanner.nextLine();
+        int pizzaChoice = 0;
+
+        if (entry.equals("1") || entry.equals("2") || entry.equals("3") ) {
+            pizzaChoice = Integer.parseInt(entry);
+        }
 
         // Get number of toppings
         System.out.print("How many additional toppings? $1.50 each: ");
-        String toppings = scanner.next();  
+        String toppings = scanner.nextLine();
         int numToppings = Integer.parseInt(toppings);
 
         // Get customer age
@@ -67,17 +72,16 @@ public class PizzaOrderSystem {
     }
 
     public static double calculateSubtotal(double pizzaPrice, int toppings) {
-        return (pizzaPrice + toppings) * 1.50;
+        return pizzaPrice + (toppings * 1.50);
     }
 
     public static double calculateDiscount(double subtotal, int age) {
         double discountRate = 0.0;
 
-
-        if (age <= 18) { 
+        if (age < 18) {
             discountRate = 0.10; 
         } else if (age >= 65) {
-            discountRate = 0.15; 
+            discountRate = 0.15;
         }
 
         return subtotal * discountRate;
@@ -86,7 +90,7 @@ public class PizzaOrderSystem {
     public static double calculateTax(double taxableAmount) {
         
         double TAX_RATE = 0.0825;  // 8.25% tax
-        double tax;
+        double tax = 0;
         if (taxableAmount > 0) {
             tax = taxableAmount * TAX_RATE;
         }
@@ -101,23 +105,23 @@ public class PizzaOrderSystem {
 
         System.out.println("\n=== Order Summary for " + name + " ===");
         System.out.println(pizzaSize + " Pizza: $" + pizzaPrice);
-        System.out.println("Total items: " + 1 + toppings);
+        System.out.println("Total items: " + (1 + toppings));
 
         if (toppings >= 0) {  
-            System.out.println("Additional Toppings (" + (toppings + 1) + "): $" +
-                    (toppings * 1.50));  
+            System.out.println("Additional Toppings (" + String.valueOf(toppings) + "): $" +
+                    String.format("%.2f", (toppings * 1.50)));
         }
 
-        System.out.println("Subtotal: $" + subtotal);
+        System.out.println("Subtotal: $" + String.format("%.2f", subtotal));
 
         if (discount > 0) {
             String discountType = getDiscountType(discount, subtotal);
 
-            System.out.println(discountType + ": -$" + discount);
+            System.out.println(discountType + ": -$" + String.format("%.2f", discount));
         }
 
-        System.out.println("Tax (8.25%): $" + taxAmount); 
-        System.out.println("Total: $" + total);  
+        System.out.println("Tax (8.25%): $" + String.format("%.2f", taxAmount));
+        System.out.println("Total: $" + String.format("%.2f", total));
 
         System.out.println("\nThank you for your order!");
     }
